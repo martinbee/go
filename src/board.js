@@ -102,3 +102,19 @@ Board.prototype.play = (i, j) => {
 
   return true;
 }
+
+// Given a board position, returns a list of [i, j] coordinates representing
+// orthagonally adjacent intersections
+Board.prototype.getAdjacentIntersections = (i, j) => {
+  const neighbors = [];
+
+  if (i > 0) neighbors.push([i - 1, j]);
+
+  if (j < this.size - 1) neighbors.push([i, j + 1]);
+
+  if (i < this.size - 1) neighbors.push([i + 1, j]);
+
+  if (j > 0) neighbors.push([i, j - 1]);
+
+  return neighbors;
+}
