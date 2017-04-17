@@ -118,3 +118,41 @@ Board.prototype.getAdjacentIntersections = (i, j) => {
 
   return neighbors;
 }
+
+Board.protype.getGroup = (i, j) => {
+	const { board, getAdjacentIntersections) = this;
+
+	const color = board[i][j];
+
+	if (color === Board.EMPTY) return;
+
+	const visited = {};
+	const visitedList = [];
+  const queue = [[i, j]];
+	let count = 0;
+
+	while (queue.length > 0) {
+	  const stone = queue.pop();
+
+		if (visited[stone]) continue;
+
+		const neighbors = getAdjacentIntersections(stone[0], stone[1]);
+
+		neighbors.forEach(neighbor => {
+		  const state = board[neighbor[0]][neighbor[1]];
+
+			if (state === Board.EMPTY) count ++
+
+			if (state === color) queue.push([neighbor[0], neighbor[1]]);
+		});
+
+		visited[stone] = true;
+		visitedList.push(stone);
+	}
+
+	return {
+	  "liberties": count,
+		"stones": visitedList,
+	}
+}
+
