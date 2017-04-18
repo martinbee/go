@@ -7,7 +7,7 @@ import PassView from './PassView';
 import BoardView from './BoardView';
 
 const GRID_SIZE = 40;
-const board = new Board(19);
+const board = Board(19);
 
 class App extends Component {
   constructor() {

@@ -26,6 +26,7 @@ export default function BoardIntersection({
   };
 
   const classes = `intersection ${getColor()}`;
+  const key = `${row}/${col}`;
 
-  return <div onClick={handleClick} className={classes} style={style}></div>;
+  return <div key={key} onClick={handleClick} className={classes} style={style}></div>;
 }
