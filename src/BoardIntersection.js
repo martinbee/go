@@ -1,27 +1,27 @@
 export default function BoardIntersection({
-	board,
-	row,
-	col,
-	onPlay,
+  board,
+  row,
+  col,
+  onPlay,
   gridSize,
-	color,
+  color,
 }) {
   const handleClick = () => {
-		if (board.play(row, col)) onPlay()
-	};
+    if (board.play(row, col)) onPlay()
+  };
 
-	const style = {
+  const style = {
     top: row * gridSize,
-		left: col * gridSize,
-	};
+    left: col * gridSize,
+  };
 
-	const getColor = () => {
+  const getColor = () => {
     if (color === Board.EMPTY) return '';
 
-		return color === Board.BLACK ? "black" : "white";
-	};
+    return color === Board.BLACK ? "black" : "white";
+  };
 
-	const classes = `intersection ${getColor()}`;
+  const classes = `intersection ${getColor()}`;
 
-	return <div onClick={handleClick} className={classes} style={style}></div>;
+  return <div onClick={handleClick} className={classes} style={style}></div>;
 }

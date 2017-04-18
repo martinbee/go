@@ -5,12 +5,12 @@ import './App.css';
 const GRID_SIZE = 40;
 
 class App extends Component {
-	constructor() {
-	  super(props);
-		const board = new Board(19);
+  constructor() {
+    super(props);
+    const board = new Board(19);
 
-		this.state = { board };
-	}
+    this.state = { board };
+  }
 
   render() {
     return (

@@ -120,39 +120,39 @@ Board.prototype.getAdjacentIntersections = (i, j) => {
 }
 
 Board.protype.getGroup = (i, j) => {
-	const { board, getAdjacentIntersections) = this;
+  const { board, getAdjacentIntersections) = this;
 
-	const color = board[i][j];
+  const color = board[i][j];
 
-	if (color === Board.EMPTY) return;
+  if (color === Board.EMPTY) return;
 
-	const visited = {};
-	const visitedList = [];
+  const visited = {};
+  const visitedList = [];
   const queue = [[i, j]];
-	let count = 0;
+  let count = 0;
 
-	while (queue.length > 0) {
-	  const stone = queue.pop();
+  while (queue.length > 0) {
+    const stone = queue.pop();
 
-		if (visited[stone]) continue;
+    if (visited[stone]) continue;
 
-		const neighbors = getAdjacentIntersections(stone[0], stone[1]);
+    const neighbors = getAdjacentIntersections(stone[0], stone[1]);
 
-		neighbors.forEach(neighbor => {
-		  const state = board[neighbor[0]][neighbor[1]];
+    neighbors.forEach(neighbor => {
+      const state = board[neighbor[0]][neighbor[1]];
 
-			if (state === Board.EMPTY) count ++
+      if (state === Board.EMPTY) count ++
 
-			if (state === color) queue.push([neighbor[0], neighbor[1]]);
-		});
+      if (state === color) queue.push([neighbor[0], neighbor[1]]);
+    });
 
-		visited[stone] = true;
-		visitedList.push(stone);
-	}
+    visited[stone] = true;
+    visitedList.push(stone);
+  }
 
-	return {
-	  "liberties": count,
-		"stones": visitedList,
-	}
+  return {
+    "liberties": count,
+    "stones": visitedList,
+  }
 }
 
