@@ -14,7 +14,7 @@ Board.BLACK = 1;
 Board.WHITE = 2;
 
 // Returns a size x size board with all entries set to Board.Empty
-Board.prototype.createBoard = (size) => {
+Board.prototype.createBoard = function(size) {
   const board = [];
 
   for (let i = 0; i < size; i ++) {
@@ -29,43 +29,39 @@ Board.prototype.createBoard = (size) => {
 }
 
 // Switches the current player
-Board.prototype.switchPlayer = () => {
+Board.prototype.switchPlayer = function() {
   this.currentColor = this.currentColor === Board.BLACK ? Board.WHITE : Board.BLACK;
 }
 
 // Pass ability
-Board.prototype.pass = () => {
-  const { endGame, switchPlayer } = this;
-
-  if (this.lastMovePassed) endGame();
+Board.prototype.pass = function {
+  if (this.lastMovePassed) this.endGame();
 
   this.lastMovePassed = true;
-  switchPlayer();
+  this.switchPlayer();
 }
 
 // Called when the game ends (both players have passed)
 Board.prototype.endGame = () => console.log("Game Over");
 
 // Attempt to place a stone at (i,j). Returns true if the move was legal
-Board.prototype.play = (i, j) => {
-  const { currentColor, getAdjacentIntersections, getGroup, switchPlayer } = this;
-
+Board.prototype.play = function(i, j) {
   console.log(`Played at ${i}, ${j}.`);
 
   this.attemptedSuicide = this.inAtari = false;
 
   if (this.board[i][j] !== Board.EMPTY) return false;
 
-  const color = this.board[i][j] = currentColor;
+  const color = this.board[i][j] = this.currentColor;
   const captured = [];
-  const neighbors = getAdjacentIntersections(i, j);
+  const neighbors = this.getAdjacentIntersections(i, j);
   let atari = false
 
   neighbors.forEach(neighbor => {
     const state = this.board[neighbor[0]][neighbor[1]];
 
     if (state !== Board.EMPTY && state !== color) {
-      const group = getGroup(neighbor[0], neighbor[1]);
+      const group = this.getGroup(neighbor[0], neighbor[1]);
       const liberties = group.liberties;
 
       console.log(group);
@@ -79,7 +75,7 @@ Board.prototype.play = (i, j) => {
   });
 
   // detect suicide
-  if (_.isEmpty(captured) && getGroup(i, j)["liberties"] === 0) {
+  if (_.isEmpty(captured) && this.getGroup(i, j)["liberties"] === 0) {
     this.board[i][j] = Board.EMPTY;
     this.attemptedSuicide = true;
 
@@ -94,14 +90,14 @@ Board.prototype.play = (i, j) => {
   if (atari) this.inAtari = true;
 
   this.lastMovePassed = false;
-  switchPlayer();
+  this.switchPlayer();
 
   return true;
 }
 
 // Given a board position, returns a list of [i, j] coordinates representing
 // orthagonally adjacent intersections
-Board.prototype.getAdjacentIntersections = (i, j) => {
+Board.prototype.getAdjacentIntersections function(i, j) {
   const neighbors = [];
 
   if (i > 0) neighbors.push([i - 1, j]);
@@ -115,8 +111,8 @@ Board.prototype.getAdjacentIntersections = (i, j) => {
   return neighbors;
 }
 
-Board.prototype.getGroup = (i, j) => {
-  const { board, getAdjacentIntersections } = this;
+Board.prototype.getGroup = function(i, j) {
+  const { board } = this;
 
   const color = board[i][j];
 
@@ -132,7 +128,7 @@ Board.prototype.getGroup = (i, j) => {
 
     if (visited[stone]) continue;
 
-    const neighbors = getAdjacentIntersections(stone[0], stone[1]);
+    const neighbors = this.getAdjacentIntersections(stone[0], stone[1]);
 
     // eslint-disable-next-line
     neighbors.forEach(neighbor => {
@@ -148,8 +144,8 @@ Board.prototype.getGroup = (i, j) => {
   }
 
   return {
-    "liberties": count,
-    "stones": visitedList,
+    liberties: count,
+    stones: visitedList,
   }
 }
 
