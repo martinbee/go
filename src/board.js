@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default function Board = (size) => {
+export default function Board(size) {
   this.currentColor = Board.BLACK;
   this.size = size;
   this.board = this.createBoard(size);
