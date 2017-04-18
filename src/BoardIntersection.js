@@ -1,3 +1,7 @@
+import React from 'react';
+
+import Board from './board';
+
 export default function BoardIntersection({
   board,
   row,

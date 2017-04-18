@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function AlertView({ board }) {
   const getText = () => {
     if (board.inAtari) {

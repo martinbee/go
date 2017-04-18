@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+import Board from './board.js';
+import AlertView from './AlertView';
+import PassView from './PassView';
+import BoardView from './BoardView';
 
 const GRID_SIZE = 40;
 const board = new Board(19);
 
 class App extends Component {
   constructor() {
-    super(props);
-
+    super();
     this.state = { board };
     this.onBoardUpdate = this.onBoardUpdate.bind(this);
   }

@@ -1,3 +1,7 @@
+import React from 'react';
+
+import BoardIntersection from './BoardIntersection';
+
 export default function BoardView({ board, gridSize, onPlay }) {
   const intersections = [];
 
@@ -12,7 +16,7 @@ export default function BoardView({ board, gridSize, onPlay }) {
         color: board.board[i][j],
       });
 
-      intersections.push(BoardIntersection);
+      intersections.push(boardIntersection);
     }
   }
 

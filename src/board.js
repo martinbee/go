@@ -30,19 +30,16 @@ Board.proptotype.createBoard = (size) => {
 
 // Switches the current player
 Board.prototype.switchPlayer = () => {
-  let { currentColor } = this;
-
-  currentColor = currentColor === Board.BLACK ? Board.WHITE : Board.BLACK;
+  this.currentColor = this.currentColor === Board.BLACK ? Board.WHITE : Board.BLACK;
 }
 
 // Pass ability
 Board.protoype.pass = () => {
   const { endGame, switchPlayer } = this;
-  let { lastMovePassed } = this;
 
-  if (lastMovedPassed) endGame();
+  if (this.lastMovePassed) endGame();
 
-  lastMovePassed = true;
+  this.lastMovePassed = true;
   switchPlayer();
 }
 
@@ -52,21 +49,20 @@ Board.protoype.endGame = () => console.log("Game Over");
 // Attempt to place a stone at (i,j). Returns true if the move was legal
 Board.prototype.play = (i, j) => {
   const { currentColor, getAdjacentIntersections, getGroup, switchPlayer } = this;
-  let { attemptedSuicide, inAtari, board, lastMovePassed } = this;
 
   console.log(`Played at ${i}, ${j}.`);
 
-  attemptedSuicide = inAtari = false;
+  this.attemptedSuicide = this.inAtari = false;
 
-  if (board[i][j] !== Board.EMPTY) return false;
+  if (this.board[i][j] !== Board.EMPTY) return false;
 
-  const color = board[i][j] = currentColor;
+  const color = this.board[i][j] = currentColor;
   const captured = [];
   const neighbors = getAdjacentIntersections(i, j);
   let atari = false
 
   neighbors.forEach(neighbor => {
-    const state = board[neighbor[0]][neighbor[1]];
+    const state = this.board[neighbor[0]][neighbor[1]];
 
     if (state !== Board.EMPTY && state !== color) {
       const group = getGroup(neighbor[0], neighbor[1]);
@@ -84,20 +80,20 @@ Board.prototype.play = (i, j) => {
 
   // detect suicide
   if (_.isEmpty(captured) && getGroup(i, j)["liberties"] === 0) {
-    board[i][j] = Board.EMPTY;
-    attemptedSuicide = true;
+    this.board[i][j] = Board.EMPTY;
+    this.attemptedSuicide = true;
 
     // Look more into this, do we need a bool return here??
     return false;
   }
 
   captured.forEach(group => {
-    group.stones.forEach(stone => board[stone[0]][stone[1]] = Board.EMPTY);
+    group.stones.forEach(stone => this.board[stone[0]][stone[1]] = Board.EMPTY);
   });
 
-  if (atari) inAtari = true;
+  if (atari) this.inAtari = true;
 
-  lastMovedPassed = false;
+  this.lastMovePassed = false;
   switchPlayer();
 
   return true;
@@ -120,7 +116,7 @@ Board.prototype.getAdjacentIntersections = (i, j) => {
 }
 
 Board.protype.getGroup = (i, j) => {
-  const { board, getAdjacentIntersections) = this;
+  const { board, getAdjacentIntersections } = this;
 
   const color = board[i][j];
 
