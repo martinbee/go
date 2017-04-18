@@ -34,7 +34,7 @@ Board.prototype.switchPlayer = function() {
 }
 
 // Pass ability
-Board.prototype.pass = function {
+Board.prototype.pass = function() {
   if (this.lastMovePassed) this.endGame();
 
   this.lastMovePassed = true;
@@ -97,7 +97,7 @@ Board.prototype.play = function(i, j) {
 
 // Given a board position, returns a list of [i, j] coordinates representing
 // orthagonally adjacent intersections
-Board.prototype.getAdjacentIntersections function(i, j) {
+Board.prototype.getAdjacentIntersections = function(i, j) {
   const neighbors = [];
 
   if (i > 0) neighbors.push([i - 1, j]);
