@@ -34,7 +34,7 @@ Board.prototype.switchPlayer = () => {
 }
 
 // Pass ability
-Board.protoype.pass = () => {
+Board.prototype.pass = () => {
   const { endGame, switchPlayer } = this;
 
   if (this.lastMovePassed) endGame();
