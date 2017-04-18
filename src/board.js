@@ -14,7 +14,7 @@ Board.BLACK = 1;
 Board.WHITE = 2;
 
 // Returns a size x size board with all entries set to Board.Empty
-Board.proptotype.createBoard = (size) => {
+Board.prototype.createBoard = (size) => {
   const board = [];
 
   for (let i = 0; i < size; i ++) {
@@ -44,7 +44,7 @@ Board.protoype.pass = () => {
 }
 
 // Called when the game ends (both players have passed)
-Board.protoype.endGame = () => console.log("Game Over");
+Board.prototype.endGame = () => console.log("Game Over");
 
 // Attempt to place a stone at (i,j). Returns true if the move was legal
 Board.prototype.play = (i, j) => {
@@ -115,7 +115,7 @@ Board.prototype.getAdjacentIntersections = (i, j) => {
   return neighbors;
 }
 
-Board.protype.getGroup = (i, j) => {
+Board.prototype.getGroup = (i, j) => {
   const { board, getAdjacentIntersections } = this;
 
   const color = board[i][j];
@@ -134,6 +134,7 @@ Board.protype.getGroup = (i, j) => {
 
     const neighbors = getAdjacentIntersections(stone[0], stone[1]);
 
+    // eslint-disable-next-line
     neighbors.forEach(neighbor => {
       const state = board[neighbor[0]][neighbor[1]];
 
