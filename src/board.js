@@ -41,8 +41,20 @@ Board.prototype.pass = function() {
   this.switchPlayer();
 }
 
+Board.prototype.resetGame = function() {
+  this.currentColor = Board.BLACK;
+  this.board = this.createBoard(this.size);
+  this.lastMovePassed = false;
+  this.inAtari = false;
+  this.attemptedSuicide = false;
+}
+
 // Called when the game ends (both players have passed)
-Board.prototype.endGame = () => console.log("Game Over");
+Board.prototype.endGame = function() {
+  alert("Game Over");
+
+  this.resetGame();
+}
 
 // Attempt to place a stone at (i,j). Returns true if the move was legal
 Board.prototype.play = function(i, j) {
